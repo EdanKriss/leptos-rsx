@@ -1,0 +1,220 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Leptos RSX",
+  "scopeName": "source.leptos-rsx",
+  "injectionSelector": "L:source.rust -comment -string",
+  "patterns": [
+    {
+      "include": "#view-macro"
+    }
+  ],
+  "repository": {
+    "view-macro": {
+      "begin": "\\b(?:(leptos)\\s*(::)\\s*)?(view)\\s*(!)\\s*(\\{)",
+      "beginCaptures": {
+        "1": { "name": "entity.name.namespace.rust" },
+        "2": { "name": "punctuation.separator.namespace.rust" },
+        "3": { "name": "entity.name.function.macro.rust" },
+        "4": { "name": "entity.name.function.macro.rust" },
+        "5": { "name": "punctuation.section.macro.begin.rsx" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.macro.end.rsx" }
+      },
+      "name": "meta.macro.view.rsx",
+      "patterns": [
+        {
+          "include": "#rsx-content"
+        }
+      ]
+    },
+    "rsx-content": {
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#fragment-tags" },
+        { "include": "#close-tag-element" },
+        { "include": "#close-tag-component" },
+        { "include": "#open-tag-element" },
+        { "include": "#open-tag-component" },
+        { "include": "#rust-block" },
+        { "include": "#string" }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "match": "//.*",
+          "name": "comment.line.double-slash.rust"
+        },
+        {
+          "begin": "/\\*",
+          "end": "\\*/",
+          "name": "comment.block.rust"
+        }
+      ]
+    },
+    "fragment-tags": {
+      "match": "(</?)(>)",
+      "captures": {
+        "1": { "name": "punctuation.definition.tag.begin.rsx" },
+        "2": { "name": "punctuation.definition.tag.end.rsx" }
+      },
+      "name": "meta.tag.fragment.rsx"
+    },
+    "close-tag-element": {
+      "match": "(</)\\s*([a-z][\\w-]*)\\s*(>)",
+      "captures": {
+        "1": { "name": "punctuation.definition.tag.begin.rsx" },
+        "2": { "name": "entity.name.tag.rsx" },
+        "3": { "name": "punctuation.definition.tag.end.rsx" }
+      },
+      "name": "meta.tag.close.rsx"
+    },
+    "close-tag-component": {
+      "match": "(</)\\s*((?:[A-Za-z_]\\w*\\s*::\\s*)*[A-Z]\\w*)\\s*(>)",
+      "captures": {
+        "1": { "name": "punctuation.definition.tag.begin.rsx" },
+        "2": { "name": "support.class.component.rsx" },
+        "3": { "name": "punctuation.definition.tag.end.rsx" }
+      },
+      "name": "meta.tag.close.rsx"
+    },
+    "open-tag-element": {
+      "begin": "(<)([a-z][\\w-]*)(?=[\\s/>]|$)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.rsx" },
+        "2": { "name": "entity.name.tag.rsx" }
+      },
+      "end": "(/>)|(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.self-closing.rsx" },
+        "2": { "name": "punctuation.definition.tag.end.rsx" }
+      },
+      "name": "meta.tag.open.rsx",
+      "patterns": [
+        { "include": "#attributes" }
+      ]
+    },
+    "open-tag-component": {
+      "begin": "(<)((?:[A-Za-z_]\\w*\\s*::\\s*)*[A-Z]\\w*)(?=[\\s/>]|$)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.rsx" },
+        "2": { "name": "support.class.component.rsx" }
+      },
+      "end": "(/>)|(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.self-closing.rsx" },
+        "2": { "name": "punctuation.definition.tag.end.rsx" }
+      },
+      "name": "meta.tag.open.component.rsx",
+      "patterns": [
+        { "include": "#attributes" }
+      ]
+    },
+    "attributes": {
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#attribute-namespaced" },
+        { "include": "#attribute-node-ref" },
+        { "include": "#attribute-name" },
+        { "include": "#attribute-eq-braced-or-string" },
+        { "include": "#string" },
+        { "include": "#rust-block" },
+        { "include": "#attribute-bare-value" }
+      ]
+    },
+    "attribute-namespaced": {
+      "match": "\\b(on|class|style|prop|attr|use|bind)(:)([\\w.-]+)",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.namespace.leptos.rsx" },
+        "2": { "name": "punctuation.separator.namespace.rsx" },
+        "3": { "name": "entity.other.attribute-name.leptos.rsx" }
+      }
+    },
+    "attribute-node-ref": {
+      "match": "\\b(node_ref|ref)\\b",
+      "name": "entity.other.attribute-name.node-ref.leptos.rsx"
+    },
+    "attribute-name": {
+      "match": "[\\w-]+",
+      "name": "entity.other.attribute-name.rsx"
+    },
+    "attribute-eq-braced-or-string": {
+      "match": "(=)(?=\\s*[{\"])",
+      "name": "punctuation.separator.key-value.rsx"
+    },
+    "attribute-bare-value": {
+      "begin": "(=)\\s*(?![{\"\\s])",
+      "beginCaptures": {
+        "1": { "name": "punctuation.separator.key-value.rsx" }
+      },
+      "end": "(?=/>)|(?<![=-])(?=>)|(?=\\s+[\\w-]+(?::[\\w.-]+)?\\s*=)|(?=\\s*$)",
+      "name": "meta.embedded.block.rust",
+      "patterns": [
+        { "include": "#rust-code" }
+      ]
+    },
+    "rust-block": {
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.embedded.begin.rsx" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.embedded.end.rsx" }
+      },
+      "name": "meta.embedded.block.rust",
+      "patterns": [
+        { "include": "#rust-code" }
+      ]
+    },
+    "rust-code": {
+      "patterns": [
+        { "include": "#view-macro" },
+        { "include": "#balanced-braces" },
+        { "include": "#balanced-parens" },
+        { "include": "#balanced-brackets" },
+        { "include": "source.rust" }
+      ]
+    },
+    "balanced-braces": {
+      "begin": "\\{",
+      "end": "\\}",
+      "patterns": [
+        { "include": "#rust-code" }
+      ]
+    },
+    "balanced-parens": {
+      "begin": "\\(",
+      "end": "\\)",
+      "patterns": [
+        { "include": "#rust-code" }
+      ]
+    },
+    "balanced-brackets": {
+      "begin": "\\[",
+      "end": "\\]",
+      "patterns": [
+        { "include": "#rust-code" }
+      ]
+    },
+    "string": {
+      "begin": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.rsx" }
+      },
+      "end": "\"",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.rsx" }
+      },
+      "name": "string.quoted.double.rsx",
+      "patterns": [
+        {
+          "match": "\\\\.",
+          "name": "constant.character.escape.rust"
+        }
+      ]
+    }
+  }
+}

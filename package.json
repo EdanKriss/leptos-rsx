@@ -1,0 +1,90 @@
+{
+  "name": "leptos-rsx-html",
+  "displayName": "Leptos RSX (HTML)",
+  "description": "HTML syntax highlighting and IntelliSense inside Leptos view! macros — brace-safe highlighting with embedded Rust, per-element attribute and value completions.",
+  "version": "0.2.2",
+  "publisher": "EdanKriss",
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "leptos",
+    "rsx",
+    "rust",
+    "html",
+    "view macro"
+  ],
+  "activationEvents": [
+    "onLanguage:rust"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Leptos RSX (HTML)",
+      "properties": {
+        "leptosRsxHtml.filterSemanticTokens": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Filter rust-analyzer's semantic tokens inside `view!` markup (tags, attribute names, quoted values) so the RSX grammar shows through, while embedded and surrounding Rust keeps full semantic highlighting. Takes effect on the next edit after toggling."
+        },
+        "leptosRsxHtml.filterHovers": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Trim rust-analyzer's generic crate-documentation section (the `extern crate leptos` / \"About Leptos\" block) from hovers on `view!` markup, keeping the element signature and its docs. Uses the same rust-analyzer hook as `#leptosRsxHtml.filterSemanticTokens#`."
+        },
+        "leptosRsxHtml.decorationsFallback": {
+          "type": "string",
+          "enum": ["auto", "always", "off"],
+          "default": "auto",
+          "markdownDescription": "Paint RSX markup with editor decorations (extension palette, not theme colors). `auto`: only when semantic-token filtering can't attach to rust-analyzer. `always` / `off` force it on or off."
+        },
+        "leptosRsxHtml.hovers": {
+          "type": "string",
+          "enum": ["off", "attributes", "all"],
+          "default": "off",
+          "markdownDescription": "Which RSX hovers to show. Default `off`: rust-analyzer already stacks its own hover cards inside `view!`, so RSX hovers add noise. `attributes` documents attribute names and Leptos namespaces (MDN-sourced); `all` also adds tag hovers, which duplicate rust-analyzer's tachys element docs."
+        }
+      }
+    },
+    "grammars": [
+      {
+        "scopeName": "source.leptos-rsx",
+        "path": "./syntaxes/leptos-rsx.injection.tmLanguage.json",
+        "injectTo": [
+          "source.rust"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.rust": "rust"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "esbuild-base": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --main-fields=module,main",
+    "build": "npm run esbuild-base -- --sourcemap",
+    "watch": "npm run esbuild-base -- --sourcemap --watch",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "node --test 'test/unit/**/*.test.ts'",
+    "test:grammar": "vscode-tmgrammar-snap -g syntaxes/leptos-rsx.injection.tmLanguage.json -g test/rust.tmLanguage.json -s source.rust 'test/fixtures/*.rs'",
+    "test:smoke": "npm run build && node test/smoke.cjs",
+    "test": "npm run typecheck && npm run test:unit && npm run test:grammar && npm run test:smoke",
+    "package": "vsce package --allow-missing-repository",
+    "vscode:prepublish": "npm run esbuild-base -- --minify"
+  },
+  "dependencies": {
+    "vscode-html-languageservice": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.3.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.0",
+    "vscode-tmgrammar-test": "^0.1.3"
+  }
+}

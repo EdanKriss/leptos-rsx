@@ -1,0 +1,533 @@
+>use leptos::prelude::*;
+#^^^ source.rust meta.use.rust keyword.other.rust
+#   ^ source.rust meta.use.rust
+#    ^^^^^^ source.rust meta.use.rust entity.name.namespace.rust
+#          ^^ source.rust meta.use.rust keyword.operator.namespace.rust
+#            ^^^^^^^ source.rust meta.use.rust entity.name.namespace.rust
+#                   ^^ source.rust meta.use.rust keyword.operator.namespace.rust
+#                     ^ source.rust meta.use.rust keyword.operator.math.rust
+#                      ^ source.rust meta.use.rust punctuation.semi.rust
+>
+>#[component]
+#^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
+# ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+#  ^^^^^^^^^ source.rust meta.attribute.rust
+#           ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+>pub fn ThemeSwitch() -> impl IntoView {
+#^^^ source.rust keyword.other.rust
+#   ^ source.rust
+#    ^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#      ^ source.rust meta.function.definition.rust
+#       ^^^^^^^^^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#                  ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                   ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                    ^ source.rust meta.function.definition.rust
+#                     ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#                       ^ source.rust meta.function.definition.rust
+#                        ^^^^ source.rust meta.function.definition.rust keyword.other.rust
+#                            ^ source.rust meta.function.definition.rust
+#                             ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
+#                                     ^ source.rust meta.function.definition.rust
+#                                      ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+>    let mode = RwSignal::new(ThemeMode::System);
+#^^^^ source.rust
+#    ^^^ source.rust keyword.other.rust storage.type.rust
+#       ^ source.rust
+#        ^^^^ source.rust variable.other.rust
+#            ^ source.rust
+#             ^ source.rust keyword.operator.assignment.equal.rust
+#              ^ source.rust
+#               ^^^^^^^^ source.rust entity.name.type.rust
+#                       ^^ source.rust keyword.operator.namespace.rust
+#                         ^^^ source.rust meta.function.call.rust entity.name.function.rust
+#                            ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                             ^^^^^^^^^ source.rust meta.function.call.rust entity.name.namespace.rust
+#                                      ^^ source.rust meta.function.call.rust keyword.operator.namespace.rust
+#                                        ^^^^^^ source.rust meta.function.call.rust entity.name.type.rust
+#                                              ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                               ^ source.rust punctuation.semi.rust
+>    let modes = [ThemeMode::Light, ThemeMode::System, ThemeMode::Dark];
+#^^^^ source.rust
+#    ^^^ source.rust keyword.other.rust storage.type.rust
+#       ^ source.rust
+#        ^^^^^ source.rust variable.other.rust
+#             ^ source.rust
+#              ^ source.rust keyword.operator.assignment.equal.rust
+#               ^ source.rust
+#                ^ source.rust punctuation.brackets.square.rust
+#                 ^^^^^^^^^ source.rust entity.name.type.rust
+#                          ^^ source.rust keyword.operator.namespace.rust
+#                            ^^^^^ source.rust entity.name.type.rust
+#                                 ^ source.rust punctuation.comma.rust
+#                                  ^ source.rust
+#                                   ^^^^^^^^^ source.rust entity.name.type.rust
+#                                            ^^ source.rust keyword.operator.namespace.rust
+#                                              ^^^^^^ source.rust entity.name.type.rust
+#                                                    ^ source.rust punctuation.comma.rust
+#                                                     ^ source.rust
+#                                                      ^^^^^^^^^ source.rust entity.name.type.rust
+#                                                               ^^ source.rust keyword.operator.namespace.rust
+#                                                                 ^^^^ source.rust entity.name.type.rust
+#                                                                     ^ source.rust punctuation.brackets.square.rust
+#                                                                      ^ source.rust punctuation.semi.rust
+>
+>    view! {
+#^^^^ source.rust
+#    ^^^^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#        ^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#         ^ source.rust meta.macro.view.rsx
+#          ^ source.rust meta.macro.view.rsx punctuation.section.macro.begin.rsx
+>        <div class="theme-switch" role="radiogroup" aria-label="Color theme">
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#         ^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+#            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#             ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                  ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                   ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                    ^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                                  ^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                      ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                        ^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                                  ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                                   ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                                                    ^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                                              ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                                                               ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                                                ^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                                                           ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                                                            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.rsx
+>            <span class="theme-switch__thumb"></span>
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#             ^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+#                 ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                  ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                        ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                         ^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                             ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.rsx
+#                                              ^^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#                                                ^^^^ source.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
+#                                                    ^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+>            {modes
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust punctuation.section.embedded.begin.rsx
+#             ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust variable.other.rust
+>                .into_iter()
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust
+#                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                 ^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                          ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                           ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+>                .map(|m| {
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust
+#                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                 ^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                    ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                     ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust keyword.operator.logical.rust
+#                      ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust variable.other.rust
+#                       ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust keyword.operator.logical.rust
+#                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust
+#                         ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.curly.rust
+>                    view! {
+#^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust
+#                    ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx entity.name.function.macro.rust
+#                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx entity.name.function.macro.rust
+#                         ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx
+#                          ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx punctuation.section.macro.begin.rsx
+>                        <button
+#^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx
+#                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#                         ^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+>                            class="theme-switch__option"
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                                  ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                   ^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                                       ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+>                            class:is-active=move || mode.get() == m
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
+#                                  ^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
+#                                           ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                            ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.other.rust
+#                                                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                  ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                   ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                    ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                                         ^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                                            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                             ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                              ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                               ^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.comparison.rust
+#                                                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                                  ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+>                            type="button"
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                  ^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+>                            role="radio"
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                  ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                       ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+>                            aria-checked=move || (mode.get() == m).to_string()
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                         ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.other.rust
+#                                             ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                              ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                               ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                  ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                      ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                                       ^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                                          ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                           ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                             ^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.comparison.rust
+#                                                               ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                                  ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                                                   ^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                                                            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                                             ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+>                            aria-label=m.label()
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                      ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                       ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                         ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                              ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                               ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+>                            title=m.label()
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                  ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                   ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                    ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                         ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                          ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+>                            on:click=move |_| mode.set(m)
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                            ^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                              ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
+#                               ^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
+#                                    ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                     ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.other.rust
+#                                         ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                          ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                           ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                             ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                              ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                  ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                                   ^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                                      ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                       ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust variable.other.rust
+#                                                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+>                        >
+#^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx
+#                        ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.rsx
+>                            {m.icon()}
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx
+#                            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust punctuation.section.embedded.begin.rsx
+#                             ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust variable.other.rust
+#                              ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                               ^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                   ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                    ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                     ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.embedded.block.rust punctuation.section.embedded.end.rsx
+>                        </button>
+#^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx
+#                        ^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#                          ^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
+#                                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+>                    }
+#^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx
+#                    ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+>                })
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust
+#                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.curly.rust
+#                 ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+>                .collect_view()}
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust
+#                ^ source.rust meta.macro.view.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                 ^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                             ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                              ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                               ^ source.rust meta.macro.view.rsx meta.embedded.block.rust punctuation.section.embedded.end.rsx
+>        </div>
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#          ^^^ source.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
+#             ^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+>    }
+#^^^^ source.rust meta.macro.view.rsx
+#    ^ source.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+>}
+#^ source.rust punctuation.brackets.curly.rust
+>
+>#[component]
+#^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
+# ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+#  ^^^^^^^^^ source.rust meta.attribute.rust
+#           ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+>fn Torture(count: RwSignal<i32>) -> impl IntoView {
+#^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#  ^ source.rust meta.function.definition.rust
+#   ^^^^^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#          ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#           ^^^^^ source.rust meta.function.definition.rust variable.other.rust
+#                ^ source.rust meta.function.definition.rust keyword.operator.key-value.rust
+#                 ^ source.rust meta.function.definition.rust
+#                  ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
+#                          ^ source.rust meta.function.definition.rust punctuation.brackets.angle.rust
+#                           ^^^ source.rust meta.function.definition.rust entity.name.type.numeric.rust
+#                              ^ source.rust meta.function.definition.rust punctuation.brackets.angle.rust
+#                               ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                                ^ source.rust meta.function.definition.rust
+#                                 ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#                                   ^ source.rust meta.function.definition.rust
+#                                    ^^^^ source.rust meta.function.definition.rust keyword.other.rust
+#                                        ^ source.rust meta.function.definition.rust
+#                                         ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
+#                                                 ^ source.rust meta.function.definition.rust
+#                                                  ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+>    let double = move || count.get() * 2;
+#^^^^ source.rust
+#    ^^^ source.rust keyword.other.rust storage.type.rust
+#       ^ source.rust
+#        ^^^^^^ source.rust variable.other.rust
+#              ^ source.rust
+#               ^ source.rust keyword.operator.assignment.equal.rust
+#                ^ source.rust
+#                 ^^^^ source.rust keyword.other.rust
+#                     ^ source.rust
+#                      ^ source.rust keyword.operator.logical.rust
+#                       ^ source.rust keyword.operator.logical.rust
+#                        ^ source.rust
+#                         ^^^^^ source.rust variable.other.rust
+#                              ^ source.rust keyword.operator.access.dot.rust
+#                               ^^^ source.rust meta.function.call.rust entity.name.function.rust
+#                                  ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                   ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                    ^ source.rust
+#                                     ^ source.rust keyword.operator.math.rust
+#                                      ^ source.rust
+#                                       ^ source.rust constant.numeric.decimal.rust
+#                                        ^ source.rust punctuation.semi.rust
+>    view! {
+#^^^^ source.rust
+#    ^^^^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#        ^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#         ^ source.rust meta.macro.view.rsx
+#          ^ source.rust meta.macro.view.rsx punctuation.section.macro.begin.rsx
+>        // comments inside rsx stay comments
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx comment.line.double-slash.rust
+>        <>
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^ source.rust meta.macro.view.rsx meta.tag.fragment.rsx punctuation.definition.tag.begin.rsx
+#         ^ source.rust meta.macro.view.rsx meta.tag.fragment.rsx punctuation.definition.tag.end.rsx
+>            <p style:color="red" prop:value=double attr:data-thing="x">
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#             ^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+#              ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#               ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                    ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
+#                     ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
+#                          ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                           ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                            ^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                               ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                                 ^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                                     ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
+#                                      ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
+#                                           ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                            ^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                  ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                                                   ^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                                                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
+#                                                        ^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
+#                                                                  ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                                                                   ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                                                    ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                                                     ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                                                      ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.rsx
+>                "quoted text node" {double()} plain text
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#                ^ source.rust meta.macro.view.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                 ^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx string.quoted.double.rsx
+#                                 ^ source.rust meta.macro.view.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                  ^ source.rust meta.macro.view.rsx
+#                                   ^ source.rust meta.macro.view.rsx meta.embedded.block.rust punctuation.section.embedded.begin.rsx
+#                                    ^^^^^^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                          ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                           ^ source.rust meta.macro.view.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                            ^ source.rust meta.macro.view.rsx meta.embedded.block.rust punctuation.section.embedded.end.rsx
+#                                             ^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+>            </p>
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#              ^ source.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
+#               ^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+>            <input type="checkbox" bind:checked=count disabled />
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#             ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+#                  ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                   ^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.rsx
+#                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.key-value.rsx
+#                        ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                         ^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.tag.open.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                  ^ source.rust meta.macro.view.rsx meta.tag.open.rsx
+#                                   ^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
+#                                        ^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
+#                                               ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                                ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                     ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                      ^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                              ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                               ^^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.self-closing.rsx
+>            <Show when=move || count.get() != 0 fallback=|| view! { <span>"nested!"</span> }>
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.begin.rsx
+#             ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx support.class.component.rsx
+#                 ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx
+#                  ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx entity.other.attribute-name.rsx
+#                      ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                       ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.other.rust
+#                           ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                             ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                              ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                               ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust variable.other.rust
+#                                    ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                     ^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                        ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                          ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                           ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.comparison.rust
+#                                             ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                              ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust constant.numeric.decimal.rust
+#                                               ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx
+#                                                ^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx entity.other.attribute-name.rsx
+#                                                        ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                          ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                           ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                                            ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx entity.name.function.macro.rust
+#                                                                ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx entity.name.function.macro.rust
+#                                                                 ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx
+#                                                                  ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx punctuation.section.macro.begin.rsx
+#                                                                   ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx
+#                                                                    ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#                                                                     ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+#                                                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.rsx
+#                                                                          ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                                                                           ^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx string.quoted.double.rsx
+#                                                                                  ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                                                                                   ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#                                                                                     ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
+#                                                                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+#                                                                                          ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx
+#                                                                                           ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+#                                                                                            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.end.rsx
+>                <my_crate::widgets::Fancy on:click=move |_| {
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#                ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.begin.rsx
+#                 ^^^^^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx support.class.component.rsx
+#                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx
+#                                          ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx entity.other.attribute-name.namespace.leptos.rsx
+#                                            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.separator.namespace.rsx
+#                                             ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx entity.other.attribute-name.leptos.rsx
+#                                                  ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                                                   ^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.other.rust
+#                                                       ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                                        ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust variable.other.rust
+#                                                          ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.logical.rust
+#                                                           ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                                            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+>                    let msg = format!("clicked {} times", count.get());
+#^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                    ^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.other.rust storage.type.rust
+#                       ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                        ^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust variable.other.rust
+#                           ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.assignment.equal.rust
+#                             ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                              ^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.rust entity.name.function.macro.rust
+#                                     ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                      ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                       ^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust
+#                                               ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust meta.interpolation.rust punctuation.definition.interpolation.rust
+#                                                ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust meta.interpolation.rust punctuation.definition.interpolation.rust
+#                                                 ^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust
+#                                                       ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                                        ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.comma.rust
+#                                                         ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                                          ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust variable.other.rust
+#                                                               ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.access.dot.rust
+#                                                                ^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.function.call.rust entity.name.function.rust
+#                                                                   ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                                    ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                                                     ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                                                      ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.semi.rust
+>                    log::info!("{msg}");
+#^^^^^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                    ^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust entity.name.namespace.rust
+#                       ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust keyword.operator.namespace.rust
+#                         ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust meta.macro.rust entity.name.function.macro.rust
+#                              ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                               ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust meta.interpolation.rust punctuation.definition.interpolation.rust
+#                                 ^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust meta.interpolation.rust
+#                                    ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust meta.interpolation.rust punctuation.definition.interpolation.rust
+#                                     ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                      ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                                       ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.semi.rust
+>                } />
+#^^^^^^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                 ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                  ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.end.self-closing.rsx
+>            </Show>
+#^^^^^^^^^^^^ source.rust meta.macro.view.rsx
+#            ^^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#              ^^^^ source.rust meta.macro.view.rsx meta.tag.close.rsx support.class.component.rsx
+#                  ^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+>        </>
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^^ source.rust meta.macro.view.rsx meta.tag.fragment.rsx punctuation.definition.tag.begin.rsx
+#          ^ source.rust meta.macro.view.rsx meta.tag.fragment.rsx punctuation.definition.tag.end.rsx
+>    }
+#^^^^ source.rust meta.macro.view.rsx
+#    ^ source.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+>}
+#^ source.rust punctuation.brackets.curly.rust
+>

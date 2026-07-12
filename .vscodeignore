@@ -1,0 +1,11 @@
+.vscode/**
+src/**
+test/**
+node_modules/**
+tsconfig.json
+PLAN.md
+assets/**
+!assets/icon.png
+dist/**/*.map
+.gitignore
+*.vsix
