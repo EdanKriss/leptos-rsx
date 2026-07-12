@@ -4,11 +4,11 @@
 
 This extension is built around two core ideas:
 
-1. Completions, highlighting, and hovers driven by the **same W3C/MDN HTML data and theme 
-  colors as VS Code's built-in HTML support** — not a hand-typed list.
+1. Completions and hovers driven by the **same W3C/MDN HTML data and theme colors as 
+   VS Code's built-in HTML support** — not a hand-typed list.
 
-2. Handling syntax highlighting at the semantic token layer rather than the TextMate grammar
-  layer. Semantic tokens always override grammars, and `view!` HTML tags are implemented as functions, so `rust-analyzer`'s tokens ruin any HTML grammars. 
+2. Handling syntax highlighting at BOTH the semantic token layer and the TextMate grammar
+   layer. Semantic tokens always override grammars, and `view!` HTML tags are implemented as functions, so `rust-analyzer`'s tokens ruin any HTML grammars. 
 
 ## Problem Statement
 
@@ -118,8 +118,9 @@ attached, the HTML card shows on its own instead.
 - Unbraced attribute values containing a bare `>` (e.g.
   `when=move || count.get() > 0`) confuse the highlighter — wrap the expression
   in braces: `when=move || { count.get() > 0 }`. (Every RSX grammar shares this
-  ambiguity; braces are also what leptosfmt produces.)
+  ambiguity; braces are also what `leptosfmt` produces.)
 - `view!` bodies using `()` or `[]` delimiters instead of `{}` are not recognized.
+  These syntaxes are rarely used, and are functionally identical.
 
 ## Roadmap
 
