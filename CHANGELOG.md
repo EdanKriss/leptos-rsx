@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.3
+
+- **RSX HTML docs merged into rust-analyzer's hover, on by default.** The MDN/W3C
+  card now renders **above** the tachys card inside one hover (VS Code gives no
+  way to reorder separate cards), each block under a heading with a pronounced
+  labeled break between them. `leptosRsxHtml.hovers` now defaults to `all`.
+  When rust-analyzer isn't attached, the card still shows standalone as before.
+
 ## 0.2.2
 
 - **Fuller HTML docs in hovers and completions.** Tag/attribute/value docs now

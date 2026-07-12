@@ -185,19 +185,13 @@ const labels = (items) => items.map((i) => i.label);
   assert.equal(complete("fn c() { let x = ‸1; }").length, 0);
 }
 
-// Hover on a tag (only shown in the "all" mode the stub config selects).
+// Standalone hover is suppressed while the middleware is attached (it merges
+// our card into rust-analyzer's hover instead of stacking a second card). The
+// merge itself is exercised through the middleware below.
 {
   const [d, p] = cursor("fn c() { view! { <but‸ton type=x></button> } }");
-  const hover = registered.hover.provideHover(d, p);
-  assert.ok(hover && /button/i.test(hover.contents.value), "tag hover has docs");
-  // Full HTML-data doc, matching a plain .html file: Baseline line + MDN link.
-  assert.ok(/MDN Reference\]\(https:\/\//.test(hover.contents.value), "tag hover has MDN link");
-  assert.ok(/Baseline/.test(hover.contents.value), "tag hover has Baseline status");
-}
-{
-  const [d, p] = cursor('fn c() { view! { <button on:cli‸ck=x></button> } }');
-  const hover = registered.hover.provideHover(d, p);
-  assert.ok(hover && hover.contents.value.length > 10, "on:click hover has docs");
+  assert.equal(registered.hover.provideHover(d, p), undefined,
+    "standalone hover suppressed while middleware attached");
 }
 
 // ---- semantic-token middleware, end to end ------------------------------
@@ -273,13 +267,23 @@ const labels = (items) => items.map((i) => i.label);
   const posOf = (word) => hd.positionAt(hoverText.indexOf(word));
 
   const onTag = await mw.provideHover(hd, posOf("button"), {}, async () => raHover());
-  const tagMd = onTag.contents[0].value;
-  assert.ok(!/About Leptos/.test(tagMd), "crate intro trimmed on tag hover");
-  assert.ok(/interactive element/.test(tagMd), "element docs kept on tag hover");
-  assert.ok(/pub fn button/.test(tagMd), "signature kept on tag hover");
+  const ourCard = onTag.contents[0].value;
+  const wholeHover = onTag.contents.map((c) => c.value).join("\n\n");
+  // Our HTML card comes first, under its label, with the full plain-.html doc.
+  assert.ok(/\*\*HTML\*\*/.test(ourCard), "our card labeled and first");
+  assert.ok(/button element represents a button/.test(ourCard), "our W3C description");
+  assert.ok(/MDN Reference\]\(https:\/\//.test(ourCard), "our card has MDN link");
+  assert.ok(/Baseline/.test(ourCard), "our card has Baseline status");
+  // The tachys card follows under its own labeled band, crate intro trimmed.
+  assert.ok(onTag.contents.some((c) => /^---\n\n\*\*rust-analyzer\*\*$/.test(c.value)),
+    "rust-analyzer section is introduced by a divider + label between the two blocks");
+  assert.ok(/pub fn button/.test(wholeHover) && /interactive element/.test(wholeHover),
+    "tachys signature and docs kept below");
+  assert.ok(!/About Leptos/.test(wholeHover), "crate intro trimmed from merged hover");
 
   const onRust = await mw.provideHover(hd, posOf("mode"), {}, async () => raHover());
-  assert.ok(/About Leptos/.test(onRust.contents[0].value), "hovers on embedded Rust untouched");
+  assert.ok(/About Leptos/.test(onRust.contents[0].value),
+    "hovers on embedded Rust are untouched (no trim, no merge)");
 
   console.log("smoke: all scenarios pass ✓");
 })().catch((err) => { console.error(err); process.exit(1); });

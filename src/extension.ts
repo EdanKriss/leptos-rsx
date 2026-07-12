@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext): void {
       new RsxCompletionProvider(),
       "<", '"', ":", "=", "/",
     ),
-    vscode.languages.registerHoverProvider(RUST, new RsxHoverProvider()),
+    vscode.languages.registerHoverProvider(RUST, new RsxHoverProvider(filter)),
     filter,
     new RsxDecorations(filter),
   );

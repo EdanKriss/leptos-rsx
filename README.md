@@ -1,16 +1,29 @@
 # Leptos RSX (HTML)
 
-**Proper HTML syntax highlighting and IntelliSense inside [Leptos](https://leptos.dev) `view!` macros.**
+**<u>_Proper_</u> HTML syntax highlighting and IntelliSense inside [Leptos](https://leptos.dev) `view!` macros.**
 
-Existing RSX extensions fall apart on real-world Leptos code — the first closure in an
-attribute value derails the highlighting, and completions are a short generic list.
 This extension is built around two ideas:
 
-1. A TextMate **injection grammar with recursive brace balancing**, so
+1. Completions, highlighting, and hovers driven by the **same W3C/MDN HTML data VS Code's built-in
+   HTML support uses** — not a hand-typed list.
+2. A TextMate **injection grammar with recursive brace balancing**, so
    `on:click=move |_| mode.set(m)` and nested `view!` macros highlight correctly,
    with the embedded Rust getting genuine Rust highlighting.
-2. Completions and hovers driven by the **same W3C/MDN HTML data VS Code's built-in
-   HTML support uses** — not a hand-typed list.
+
+## Problem Statement
+
+Existing RSX extensions fall apart on real-world Leptos code:
+
+- `rust-analyzer` adds semantic tokens that override extension syntax highlighting, coloring
+  html opening tags and attributes as functions, and closing tags with the generic catch-all color:
+
+  ![Leptos view! macro where rust-analyzer's semantic tokens have overridden the RSX highlighting](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/old_highlighting.png)
+- `rust-analyzer` hover info inside of the `view!` macros resolves through the whole macro expansion.
+  The result is a combo of the `tachys` type (useful) and then the entire `Leptos` crate-level intro docs (useless):
+
+  ![Leptos view! hover info with useless crate-level docs](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/old_hover_info.png)
+- the first closure in an attribute value derails the highlighting
+- completions are a short generic list
 
 ## Features
 
@@ -61,17 +74,23 @@ the extension degrades gracefully: `leptosRsxHtml.decorationsFallback`
 colors from the extension's palette rather than your theme's, and never a
 functional loss.
 
-The same hook also cleans up **hovers** inside markup: rust-analyzer's hover
-on a tag like `div` resolves through the macro expansion and appends the
-generic `extern crate leptos` / "About Leptos" crate intro below the useful
-element docs. The middleware trims that section off, keeping the tachys
-signature and MDN element docs (`leptosRsxHtml.filterHovers`, default on).
+The same hook also improves **hovers** inside markup. Two things happen:
 
-RSX hovers are **off by default**: rust-analyzer stacks its own hover cards
-inside `view!` (its tachys element docs even embed MDN content), so extra
-cards read as noise. If you want MDN documentation on attribute names and
-Leptos namespaces (`aria-*`, `on:`, `bind:`, …), set `leptosRsxHtml.hovers`
-to `"attributes"` — or `"all"` to add tag hovers too.
+1. rust-analyzer's hover on a tag like `div` resolves through the macro
+   expansion and appends the generic `extern crate leptos` / "About Leptos"
+   crate intro below the useful element docs. The middleware trims that section
+   off (`leptosRsxHtml.filterHovers`, default on).
+2. It adds an **HTML card** — the same content VS Code's built-in HTML support
+   shows in a plain `.html` file: description, the Baseline availability line,
+   and the **MDN Reference** link — and renders it *above* rust-analyzer's card
+   in the same hover, each block under a heading with a clear labeled break
+   between them. (VS Code offers no way to reorder separate hover cards, so we
+   merge into r-a's rather than stacking a second card.)
+
+Controlled by `leptosRsxHtml.hovers` (default `all` = tags, attributes, and
+Leptos namespaces; `attributes` skips tags since tachys already documents them;
+`off` shows only rust-analyzer's trimmed hover). When rust-analyzer isn't
+attached, the HTML card shows on its own instead.
 
 ## Known limitations
 

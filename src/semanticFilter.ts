@@ -14,6 +14,7 @@
 
 import * as vscode from "vscode";
 import { trimCrateDocSection } from "./hoverTrim.ts";
+import { rsxHoverMarkdown, type RsxHover } from "./hover.ts";
 import { inRanges, scanRsxRegions } from "./rsxRegions.ts";
 import {
   applySemanticTokenEdits,
@@ -96,6 +97,35 @@ interface RegionCacheEntry {
 }
 
 const RA_EXTENSION_ID = "rust-lang.rust-analyzer";
+
+// Labels that head each block of the merged hover. The rust-analyzer label sits
+// in its own hover section, so VS Code brackets it with a rule above *and*
+// below — a far more deliberate break than the single divider array contents
+// would otherwise get between our card and the tachys card.
+// A Markdown thematic break renders as an <hr> — the same divider rust-analyzer
+// puts between its signature and docs. It's kept on its own line ahead of the
+// title (not trailing the HTML paragraph, where the hover renderer swallows it).
+const HTML_LABEL = "**HTML** · MDN / W3C";
+const RA_LABEL = "---\n\n**rust-analyzer**";
+
+/**
+ * Merge our RSX HTML card above rust-analyzer's (already trimmed) hover, each
+ * under a heading. `base` is null when r-a had no hover (or trimming emptied
+ * it), in which case we show our card alone.
+ */
+function mergeHover(
+  base: vscode.Hover | null,
+  rsx: RsxHover,
+  raRange: vscode.Range | undefined,
+): vscode.Hover {
+  const range = raRange ?? rsx.range;
+  if (!base || base.contents.length === 0) return new vscode.Hover(rsx.md, range);
+  const html = new vscode.MarkdownString(`${HTML_LABEL}\n\n${rsx.md.value}`);
+  return new vscode.Hover(
+    [html, new vscode.MarkdownString(RA_LABEL), ...base.contents],
+    range,
+  );
+}
 
 export class SemanticTokenFilter implements vscode.Disposable {
   private readonly statusEmitter = new vscode.EventEmitter<FilterStatus>();
@@ -234,11 +264,19 @@ export class SemanticTokenFilter implements vscode.Disposable {
       const res = prevHover
         ? await prevHover(document, position, token, next)
         : await next(document, position, token);
-      if (!res || document.languageId !== "rust" || !this.hoverTrimEnabled()) return res;
+      if (document.languageId !== "rust") return res;
       try {
-        const regions = this.regionsFor(document);
-        if (!inRanges(regions.markup, document.offsetAt(position))) return res;
-        return this.trimmedHover(res);
+        if (!inRanges(this.regionsFor(document).markup, document.offsetAt(position))) {
+          return res; // outside markup: rust-analyzer's hover, untouched
+        }
+        // In RSX markup. Optionally strip r-a's crate-doc noise, then optionally
+        // prepend our HTML card so it renders above the tachys card.
+        let base: vscode.Hover | null = res ?? null;
+        if (base && this.hoverTrimEnabled()) base = this.trimmedHover(base);
+        const mode = this.hoversMode();
+        const rsx = mode === "off" ? undefined : rsxHoverMarkdown(document, position, mode);
+        if (!rsx) return base ?? undefined;
+        return mergeHover(base, rsx, res?.range);
       } catch {
         return res;
       }
@@ -249,6 +287,12 @@ export class SemanticTokenFilter implements vscode.Disposable {
     return vscode.workspace
       .getConfiguration("leptosRsxHtml")
       .get<boolean>("filterHovers", true);
+  }
+
+  private hoversMode(): string {
+    return vscode.workspace
+      .getConfiguration("leptosRsxHtml")
+      .get<string>("hovers", "all");
   }
 
   /** Returns the hover with crate-doc sections cut, or null if nothing is left. */

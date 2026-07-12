@@ -2,7 +2,7 @@
   "name": "leptos-rsx-html",
   "displayName": "Leptos RSX (HTML)",
   "description": "HTML syntax highlighting and IntelliSense inside Leptos view! macros — brace-safe highlighting with embedded Rust, per-element attribute and value completions.",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "publisher": "EdanKriss",
   "license": "MIT",
   "icon": "assets/icon.png",
@@ -45,9 +45,9 @@
         },
         "leptosRsxHtml.hovers": {
           "type": "string",
-          "enum": ["off", "attributes", "all"],
-          "default": "off",
-          "markdownDescription": "Which RSX hovers to show. Default `off`: rust-analyzer already stacks its own hover cards inside `view!`, so RSX hovers add noise. `attributes` documents attribute names and Leptos namespaces (MDN-sourced); `all` also adds tag hovers, which duplicate rust-analyzer's tachys element docs."
+          "enum": ["all", "attributes", "off"],
+          "default": "all",
+          "markdownDescription": "Which RSX HTML docs to add to hovers inside `view!`. When the semantic-token filter is attached, these are merged **above** rust-analyzer's card (under an `HTML` heading), each block clearly separated; otherwise they show as a standalone card. `all`: tags, attributes, and Leptos namespaces. `attributes`: skip tag hovers (rust-analyzer's tachys element docs cover those). `off`: no RSX docs (rust-analyzer's hover still shows, trimmed per `#leptosRsxHtml.filterHovers#`)."
         }
       }
     },
