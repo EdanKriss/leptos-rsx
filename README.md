@@ -2,28 +2,49 @@
 
 **<u>_Proper_</u> HTML syntax highlighting and IntelliSense inside [Leptos](https://leptos.dev) `view!` macros.**
 
-This extension is built around two ideas:
+This extension is built around two core ideas:
 
-1. Completions, highlighting, and hovers driven by the **same W3C/MDN HTML data VS Code's built-in
-   HTML support uses** — not a hand-typed list.
-2. A TextMate **injection grammar with recursive brace balancing**, so
-   `on:click=move |_| mode.set(m)` and nested `view!` macros highlight correctly,
-   with the embedded Rust getting genuine Rust highlighting.
+1. Completions, highlighting, and hovers driven by the **same W3C/MDN HTML data and theme 
+  colors as VS Code's built-in HTML support** — not a hand-typed list.
+
+2. Handling syntax highlighting at the semantic token layer rather than the TextMate grammar
+  layer. Semantic tokens always override grammars, and `view!` HTML tags are implemented as functions, so `rust-analyzer`'s tokens ruin any HTML grammars. 
 
 ## Problem Statement
 
-Existing RSX extensions fall apart on real-world Leptos code:
+Existing RSX extensions fail to address IDE issues with `rust-analyzer` enabled:
 
 - `rust-analyzer` adds semantic tokens that override extension syntax highlighting, coloring
   html opening tags and attributes as functions, and closing tags with the generic catch-all color:
 
   ![Leptos view! macro where rust-analyzer's semantic tokens have overridden the RSX highlighting](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/old_highlighting.png)
-- `rust-analyzer` hover info inside of the `view!` macros resolves through the whole macro expansion.
-  The result is a combo of the `tachys` type (useful) and then the entire `Leptos` crate-level intro docs (useless):
+
+- Code completion is inaccurate or missing entirely for html attributes:
+
+  ![Leptos view! code completion doesn't work correctly](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/old_code_completion.png)
+
+- `rust-analyzer` hover info inside of the `view!` macros resolves through the WHOLE macro 
+  expansion. The result is a combo of the `tachys` type (useful) and ALSO the entire `Leptos` crate-level intro docs (useless):
 
   ![Leptos view! hover info with useless crate-level docs](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/old_hover_info.png)
-- the first closure in an attribute value derails the highlighting
-- completions are a short generic list
+
+## Problem Resolutions
+
+With this extension installed, you can expect:
+
+- Correct HTML syntax highlighting for tags and attributes, without affecting nested Rust 
+  code closures:
+
+  ![Leptos view! macro with correct highlighting](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/new_highlighting.png)
+
+- Accurate code completion, consistent with behavior inside a `.html` file:
+
+  ![Leptos view! code completion now works correctly](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/new_code_completion.png)
+
+- Sane hover info, starting with the info you get in a `.html` file, followed by the `tachys`
+  type info. Each section (HTML and rust-analyzer) is labeled for clarity:
+
+  ![Leptos view! hover info is now useful](https://raw.githubusercontent.com/EdanKriss/leptos-rsx/main/assets/new_hover_info.png)
 
 ## Features
 
