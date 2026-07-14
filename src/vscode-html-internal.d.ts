@@ -5,15 +5,15 @@
 // Bundled and version-locked, so the deep path is stable at runtime; a rename
 // upstream would fail the build, not degrade silently.
 declare module "vscode-html-languageservice/lib/esm/languageFacts/dataProvider.js" {
-  import type {
-    ITagData,
-    IAttributeData,
-    IValueData,
-    MarkupContent,
-  } from "vscode-html-languageservice";
-  export function generateDocumentation(
-    item: ITagData | IAttributeData | IValueData,
-    settings?: { documentation?: boolean; references?: boolean },
-    doesSupportMarkdown?: boolean,
-  ): MarkupContent | undefined;
+    import type {
+        ITagData,
+        IAttributeData,
+        IValueData,
+        MarkupContent,
+    } from "vscode-html-languageservice";
+    export function generateDocumentation(
+        item: ITagData | IAttributeData | IValueData,
+        settings?: { documentation?: boolean; references?: boolean },
+        doesSupportMarkdown?: boolean,
+    ): MarkupContent | undefined;
 }

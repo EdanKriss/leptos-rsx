@@ -10,24 +10,24 @@
 // `extern crate` fence onward.
 
 const EXTERN_CRATE_FENCE =
-  /(?:^|\r?\n)[ \t]*```rust[ \t]*\r?\n(?:pub\s+)?extern\s+crate\s+\w+[ \t]*\r?\n[ \t]*```/;
+    /(?:^|\r?\n)[ \t]*```rust[ \t]*\r?\n(?:pub\s+)?extern\s+crate\s+\w+[ \t]*\r?\n[ \t]*```/;
 
 // rust-analyzer separates hover parts with a horizontal rule on its own line;
 // which character it uses (--- vs ___) has varied across versions.
 const RULES = ["---", "___"];
 
 /**
- * Cut a trailing `extern crate …` section (fence + crate docs) from hover
- * markdown. Returns the input unchanged when no such section exists; returns
- * "" when the crate section was the entire hover.
- */
+  * Cut a trailing `extern crate …` section (fence + crate docs) from hover
+  * markdown. Returns the input unchanged when no such section exists; returns
+  * "" when the crate section was the entire hover.
+  */
 export function trimCrateDocSection(markdown: string): string {
-  const match = EXTERN_CRATE_FENCE.exec(markdown);
-  if (!match) return markdown;
-  let head = markdown.slice(0, match.index).trimEnd();
-  // Drop the section separator left dangling above the cut.
-  while (RULES.some((r) => head.endsWith(r))) {
-    head = head.slice(0, -3).trimEnd();
-  }
-  return head;
+    const match = EXTERN_CRATE_FENCE.exec(markdown);
+    if (!match) return markdown;
+    let head = markdown.slice(0, match.index).trimEnd();
+    // Drop the section separator left dangling above the cut.
+    while (RULES.some((r) => head.endsWith(r))) {
+        head = head.slice(0, -3).trimEnd();
+    }
+    return head;
 }
