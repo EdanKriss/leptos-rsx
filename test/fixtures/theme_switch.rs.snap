@@ -1,3 +1,12 @@
+>#![allow(non_snake_case)]
+#^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
+# ^ source.rust meta.attribute.rust
+#  ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+#   ^^^^^ source.rust meta.attribute.rust
+#        ^ source.rust meta.attribute.rust punctuation.brackets.round.rust
+#         ^^^^^^^^^^^^^^ source.rust meta.attribute.rust
+#                       ^ source.rust meta.attribute.rust punctuation.brackets.round.rust
+#                        ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
 >use leptos::prelude::*;
 #^^^ source.rust meta.use.rust keyword.other.rust
 #   ^ source.rust meta.use.rust
@@ -7,6 +16,70 @@
 #                   ^^ source.rust meta.use.rust keyword.operator.namespace.rust
 #                     ^ source.rust meta.use.rust keyword.operator.math.rust
 #                      ^ source.rust meta.use.rust punctuation.semi.rust
+>
+>#[component]
+#^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
+# ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+#  ^^^^^^^^^ source.rust meta.attribute.rust
+#           ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+>pub fn App() -> impl IntoView {
+#^^^ source.rust keyword.other.rust
+#   ^ source.rust
+#    ^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#      ^ source.rust meta.function.definition.rust
+#       ^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#          ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#           ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#            ^ source.rust meta.function.definition.rust
+#             ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#               ^ source.rust meta.function.definition.rust
+#                ^^^^ source.rust meta.function.definition.rust keyword.other.rust
+#                    ^ source.rust meta.function.definition.rust
+#                     ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
+#                             ^ source.rust meta.function.definition.rust
+#                              ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+>    let count = RwSignal::new(0);
+#^^^^ source.rust
+#    ^^^ source.rust keyword.other.rust storage.type.rust
+#       ^ source.rust
+#        ^^^^^ source.rust variable.other.rust
+#             ^ source.rust
+#              ^ source.rust keyword.operator.assignment.equal.rust
+#               ^ source.rust
+#                ^^^^^^^^ source.rust entity.name.type.rust
+#                        ^^ source.rust keyword.operator.namespace.rust
+#                          ^^^ source.rust meta.function.call.rust entity.name.function.rust
+#                             ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                              ^ source.rust meta.function.call.rust constant.numeric.decimal.rust
+#                               ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                ^ source.rust punctuation.semi.rust
+>    view! {
+#^^^^ source.rust
+#    ^^^^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#        ^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#         ^ source.rust meta.macro.view.rsx
+#          ^ source.rust meta.macro.view.rsx punctuation.section.macro.begin.rsx
+>        <ThemeSwitch />
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.begin.rsx
+#         ^^^^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx support.class.component.rsx
+#                    ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx
+#                     ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.end.self-closing.rsx
+>        <Torture count=count />
+#^^^^^^^^ source.rust meta.macro.view.rsx
+#        ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.begin.rsx
+#         ^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx support.class.component.rsx
+#                ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx
+#                 ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx entity.other.attribute-name.rsx
+#                      ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
+#                       ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust variable.other.rust
+#                            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx meta.embedded.block.rust
+#                             ^^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.end.self-closing.rsx
+>    }
+#^^^^ source.rust meta.macro.view.rsx
+#    ^ source.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+>}
+#^ source.rust punctuation.brackets.curly.rust
 >
 >#[component]
 #^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
@@ -292,27 +365,29 @@
 # ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
 #  ^^^^^^^^^ source.rust meta.attribute.rust
 #           ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
->fn Torture(count: RwSignal<i32>) -> impl IntoView {
-#^^ source.rust meta.function.definition.rust keyword.other.fn.rust
-#  ^ source.rust meta.function.definition.rust
-#   ^^^^^^^ source.rust meta.function.definition.rust entity.name.function.rust
-#          ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
-#           ^^^^^ source.rust meta.function.definition.rust variable.other.rust
-#                ^ source.rust meta.function.definition.rust keyword.operator.key-value.rust
-#                 ^ source.rust meta.function.definition.rust
-#                  ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
-#                          ^ source.rust meta.function.definition.rust punctuation.brackets.angle.rust
-#                           ^^^ source.rust meta.function.definition.rust entity.name.type.numeric.rust
+>pub fn Torture(count: RwSignal<i32>) -> impl IntoView {
+#^^^ source.rust keyword.other.rust
+#   ^ source.rust
+#    ^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#      ^ source.rust meta.function.definition.rust
+#       ^^^^^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#              ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#               ^^^^^ source.rust meta.function.definition.rust variable.other.rust
+#                    ^ source.rust meta.function.definition.rust keyword.operator.key-value.rust
+#                     ^ source.rust meta.function.definition.rust
+#                      ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
 #                              ^ source.rust meta.function.definition.rust punctuation.brackets.angle.rust
-#                               ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
-#                                ^ source.rust meta.function.definition.rust
-#                                 ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
-#                                   ^ source.rust meta.function.definition.rust
-#                                    ^^^^ source.rust meta.function.definition.rust keyword.other.rust
-#                                        ^ source.rust meta.function.definition.rust
-#                                         ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
-#                                                 ^ source.rust meta.function.definition.rust
-#                                                  ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+#                               ^^^ source.rust meta.function.definition.rust entity.name.type.numeric.rust
+#                                  ^ source.rust meta.function.definition.rust punctuation.brackets.angle.rust
+#                                   ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                                    ^ source.rust meta.function.definition.rust
+#                                     ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#                                       ^ source.rust meta.function.definition.rust
+#                                        ^^^^ source.rust meta.function.definition.rust keyword.other.rust
+#                                            ^ source.rust meta.function.definition.rust
+#                                             ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
+#                                                     ^ source.rust meta.function.definition.rust
+#                                                      ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
 >    let double = move || count.get() * 2;
 #^^^^ source.rust
 #    ^^^ source.rust keyword.other.rust storage.type.rust
@@ -336,6 +411,21 @@
 #                                      ^ source.rust
 #                                       ^ source.rust constant.numeric.decimal.rust
 #                                        ^ source.rust punctuation.semi.rust
+>    let toggled = RwSignal::new(false);
+#^^^^ source.rust
+#    ^^^ source.rust keyword.other.rust storage.type.rust
+#       ^ source.rust
+#        ^^^^^^^ source.rust variable.other.rust
+#               ^ source.rust
+#                ^ source.rust keyword.operator.assignment.equal.rust
+#                 ^ source.rust
+#                  ^^^^^^^^ source.rust entity.name.type.rust
+#                          ^^ source.rust keyword.operator.namespace.rust
+#                            ^^^ source.rust meta.function.call.rust entity.name.function.rust
+#                               ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                ^^^^^ source.rust meta.function.call.rust constant.language.bool.rust
+#                                     ^ source.rust meta.function.call.rust punctuation.brackets.round.rust
+#                                      ^ source.rust punctuation.semi.rust
 >    view! {
 #^^^^ source.rust
 #    ^^^^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
@@ -393,7 +483,7 @@
 #            ^^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
 #              ^ source.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
 #               ^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
->            <input type="checkbox" bind:checked=count disabled />
+>            <input type="checkbox" bind:checked=toggled disabled />
 #^^^^^^^^^^^^ source.rust meta.macro.view.rsx
 #            ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
 #             ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
@@ -408,11 +498,11 @@
 #                                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.separator.namespace.rsx
 #                                        ^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.other.attribute-name.leptos.rsx
 #                                               ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust punctuation.separator.key-value.rsx
-#                                                ^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
-#                                                     ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
-#                                                      ^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
-#                                                              ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
-#                                                               ^^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.self-closing.rsx
+#                                                ^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                       ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                        ^^^^^^^^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust variable.other.rust
+#                                                                ^ source.rust meta.macro.view.rsx meta.tag.open.rsx meta.embedded.block.rust
+#                                                                 ^^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.self-closing.rsx
 >            <Show when=move || count.get() != 0 fallback=|| view! { <span>"nested!"</span> }>
 #^^^^^^^^^^^^ source.rust meta.macro.view.rsx
 #            ^ source.rust meta.macro.view.rsx meta.tag.open.component.rsx punctuation.definition.tag.begin.rsx
@@ -528,6 +618,273 @@
 >    }
 #^^^^ source.rust meta.macro.view.rsx
 #    ^ source.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+>}
+#^ source.rust punctuation.brackets.curly.rust
+>
+>#[derive(Clone, Copy, PartialEq)]
+#^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
+# ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+#  ^^^^^^ source.rust meta.attribute.rust
+#        ^ source.rust meta.attribute.rust punctuation.brackets.round.rust
+#         ^^^^^ source.rust meta.attribute.rust entity.name.type.rust
+#              ^ source.rust meta.attribute.rust punctuation.comma.rust
+#               ^ source.rust meta.attribute.rust
+#                ^^^^ source.rust meta.attribute.rust entity.name.type.rust
+#                    ^ source.rust meta.attribute.rust punctuation.comma.rust
+#                     ^ source.rust meta.attribute.rust
+#                      ^^^^^^^^^ source.rust meta.attribute.rust entity.name.type.rust
+#                               ^ source.rust meta.attribute.rust punctuation.brackets.round.rust
+#                                ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+>enum ThemeMode {
+#^^^^ source.rust keyword.declaration.enum.rust storage.type.rust
+#    ^ source.rust
+#     ^^^^^^^^^ source.rust entity.name.type.enum.rust
+#              ^ source.rust
+#               ^ source.rust punctuation.brackets.curly.rust
+>    Light,
+#^^^^ source.rust
+#    ^^^^^ source.rust entity.name.type.rust
+#         ^ source.rust punctuation.comma.rust
+>    System,
+#^^^^ source.rust
+#    ^^^^^^ source.rust entity.name.type.rust
+#          ^ source.rust punctuation.comma.rust
+>    Dark,
+#^^^^ source.rust
+#    ^^^^ source.rust entity.name.type.rust
+#        ^ source.rust punctuation.comma.rust
+>}
+#^ source.rust punctuation.brackets.curly.rust
+>
+>impl ThemeMode {
+#^^^^ source.rust keyword.other.rust
+#    ^ source.rust
+#     ^^^^^^^^^ source.rust entity.name.type.rust
+#              ^ source.rust
+#               ^ source.rust punctuation.brackets.curly.rust
+>    fn label(self) -> &'static str {
+#^^^^ source.rust
+#    ^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#      ^ source.rust meta.function.definition.rust
+#       ^^^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#            ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#             ^^^^ source.rust meta.function.definition.rust variable.language.self.rust
+#                 ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                  ^ source.rust meta.function.definition.rust
+#                   ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#                     ^ source.rust meta.function.definition.rust
+#                      ^ source.rust meta.function.definition.rust keyword.operator.borrow.and.rust
+#                       ^ source.rust meta.function.definition.rust punctuation.definition.lifetime.rust
+#                        ^^^^^^ source.rust meta.function.definition.rust entity.name.type.lifetime.rust
+#                              ^ source.rust meta.function.definition.rust
+#                               ^^^ source.rust meta.function.definition.rust entity.name.type.primitive.rust
+#                                  ^ source.rust meta.function.definition.rust
+#                                   ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+>        match self {
+#^^^^^^^^ source.rust
+#        ^^^^^ source.rust keyword.control.rust
+#             ^ source.rust
+#              ^^^^ source.rust variable.language.self.rust
+#                  ^ source.rust
+#                   ^ source.rust punctuation.brackets.curly.rust
+>            ThemeMode::Light => "Light",
+#^^^^^^^^^^^^ source.rust
+#            ^^^^^^^^^ source.rust entity.name.type.rust
+#                     ^^ source.rust keyword.operator.namespace.rust
+#                       ^^^^^ source.rust entity.name.type.rust
+#                            ^ source.rust
+#                             ^^ source.rust keyword.operator.arrow.fat.rust
+#                               ^ source.rust
+#                                ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                 ^^^^^ source.rust string.quoted.double.rust
+#                                      ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                       ^ source.rust punctuation.comma.rust
+>            ThemeMode::System => "System",
+#^^^^^^^^^^^^ source.rust
+#            ^^^^^^^^^ source.rust entity.name.type.rust
+#                     ^^ source.rust keyword.operator.namespace.rust
+#                       ^^^^^^ source.rust entity.name.type.rust
+#                             ^ source.rust
+#                              ^^ source.rust keyword.operator.arrow.fat.rust
+#                                ^ source.rust
+#                                 ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                  ^^^^^^ source.rust string.quoted.double.rust
+#                                        ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                         ^ source.rust punctuation.comma.rust
+>            ThemeMode::Dark => "Dark",
+#^^^^^^^^^^^^ source.rust
+#            ^^^^^^^^^ source.rust entity.name.type.rust
+#                     ^^ source.rust keyword.operator.namespace.rust
+#                       ^^^^ source.rust entity.name.type.rust
+#                           ^ source.rust
+#                            ^^ source.rust keyword.operator.arrow.fat.rust
+#                              ^ source.rust
+#                               ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                ^^^^ source.rust string.quoted.double.rust
+#                                    ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                     ^ source.rust punctuation.comma.rust
+>        }
+#^^^^^^^^ source.rust
+#        ^ source.rust punctuation.brackets.curly.rust
+>    }
+#^^^^ source.rust
+#    ^ source.rust punctuation.brackets.curly.rust
+>
+>    fn icon(self) -> &'static str {
+#^^^^ source.rust
+#    ^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#      ^ source.rust meta.function.definition.rust
+#       ^^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#           ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#            ^^^^ source.rust meta.function.definition.rust variable.language.self.rust
+#                ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                 ^ source.rust meta.function.definition.rust
+#                  ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#                    ^ source.rust meta.function.definition.rust
+#                     ^ source.rust meta.function.definition.rust keyword.operator.borrow.and.rust
+#                      ^ source.rust meta.function.definition.rust punctuation.definition.lifetime.rust
+#                       ^^^^^^ source.rust meta.function.definition.rust entity.name.type.lifetime.rust
+#                             ^ source.rust meta.function.definition.rust
+#                              ^^^ source.rust meta.function.definition.rust entity.name.type.primitive.rust
+#                                 ^ source.rust meta.function.definition.rust
+#                                  ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+>        match self {
+#^^^^^^^^ source.rust
+#        ^^^^^ source.rust keyword.control.rust
+#             ^ source.rust
+#              ^^^^ source.rust variable.language.self.rust
+#                  ^ source.rust
+#                   ^ source.rust punctuation.brackets.curly.rust
+>            ThemeMode::Light => "\u{2600}",
+#^^^^^^^^^^^^ source.rust
+#            ^^^^^^^^^ source.rust entity.name.type.rust
+#                     ^^ source.rust keyword.operator.namespace.rust
+#                       ^^^^^ source.rust entity.name.type.rust
+#                            ^ source.rust
+#                             ^^ source.rust keyword.operator.arrow.fat.rust
+#                               ^ source.rust
+#                                ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                 ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.backslash.rust
+#                                  ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust
+#                                   ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust constant.character.escape.unicode.punctuation.rust
+#                                    ^^^^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust
+#                                        ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust constant.character.escape.unicode.punctuation.rust
+#                                         ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                          ^ source.rust punctuation.comma.rust
+>            ThemeMode::System => "\u{25D0}",
+#^^^^^^^^^^^^ source.rust
+#            ^^^^^^^^^ source.rust entity.name.type.rust
+#                     ^^ source.rust keyword.operator.namespace.rust
+#                       ^^^^^^ source.rust entity.name.type.rust
+#                             ^ source.rust
+#                              ^^ source.rust keyword.operator.arrow.fat.rust
+#                                ^ source.rust
+#                                 ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                  ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.backslash.rust
+#                                   ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust
+#                                    ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust constant.character.escape.unicode.punctuation.rust
+#                                     ^^^^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust
+#                                         ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust constant.character.escape.unicode.punctuation.rust
+#                                          ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                           ^ source.rust punctuation.comma.rust
+>            ThemeMode::Dark => "\u{263E}",
+#^^^^^^^^^^^^ source.rust
+#            ^^^^^^^^^ source.rust entity.name.type.rust
+#                     ^^ source.rust keyword.operator.namespace.rust
+#                       ^^^^ source.rust entity.name.type.rust
+#                           ^ source.rust
+#                            ^^ source.rust keyword.operator.arrow.fat.rust
+#                              ^ source.rust
+#                               ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.backslash.rust
+#                                 ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust
+#                                  ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust constant.character.escape.unicode.punctuation.rust
+#                                   ^^^^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust
+#                                       ^ source.rust string.quoted.double.rust constant.character.escape.rust constant.character.escape.unicode.rust constant.character.escape.unicode.punctuation.rust
+#                                        ^ source.rust string.quoted.double.rust punctuation.definition.string.rust
+#                                         ^ source.rust punctuation.comma.rust
+>        }
+#^^^^^^^^ source.rust
+#        ^ source.rust punctuation.brackets.curly.rust
+>    }
+#^^^^ source.rust
+#    ^ source.rust punctuation.brackets.curly.rust
+>}
+#^ source.rust punctuation.brackets.curly.rust
+>
+>mod my_crate {
+#^^^ source.rust storage.type.rust
+#   ^ source.rust
+#    ^^^^^^^^ source.rust entity.name.module.rust
+#            ^ source.rust
+#             ^ source.rust punctuation.brackets.curly.rust
+>    pub mod widgets {
+#^^^^ source.rust
+#    ^^^ source.rust keyword.other.rust
+#       ^ source.rust
+#        ^^^ source.rust storage.type.rust
+#           ^ source.rust
+#            ^^^^^^^ source.rust entity.name.module.rust
+#                   ^ source.rust
+#                    ^ source.rust punctuation.brackets.curly.rust
+>        use leptos::prelude::*;
+#^^^^^^^^ source.rust
+#        ^^^ source.rust meta.use.rust keyword.other.rust
+#           ^ source.rust meta.use.rust
+#            ^^^^^^ source.rust meta.use.rust entity.name.namespace.rust
+#                  ^^ source.rust meta.use.rust keyword.operator.namespace.rust
+#                    ^^^^^^^ source.rust meta.use.rust entity.name.namespace.rust
+#                           ^^ source.rust meta.use.rust keyword.operator.namespace.rust
+#                             ^ source.rust meta.use.rust keyword.operator.math.rust
+#                              ^ source.rust meta.use.rust punctuation.semi.rust
+>
+>        #[component]
+#^^^^^^^^ source.rust
+#        ^ source.rust meta.attribute.rust punctuation.definition.attribute.rust
+#         ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+#          ^^^^^^^^^ source.rust meta.attribute.rust
+#                   ^ source.rust meta.attribute.rust punctuation.brackets.attribute.rust
+>        pub fn Fancy() -> impl IntoView {
+#^^^^^^^^ source.rust
+#        ^^^ source.rust keyword.other.rust
+#           ^ source.rust
+#            ^^ source.rust meta.function.definition.rust keyword.other.fn.rust
+#              ^ source.rust meta.function.definition.rust
+#               ^^^^^ source.rust meta.function.definition.rust entity.name.function.rust
+#                    ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                     ^ source.rust meta.function.definition.rust punctuation.brackets.round.rust
+#                      ^ source.rust meta.function.definition.rust
+#                       ^^ source.rust meta.function.definition.rust keyword.operator.arrow.skinny.rust
+#                         ^ source.rust meta.function.definition.rust
+#                          ^^^^ source.rust meta.function.definition.rust keyword.other.rust
+#                              ^ source.rust meta.function.definition.rust
+#                               ^^^^^^^^ source.rust meta.function.definition.rust entity.name.type.rust
+#                                       ^ source.rust meta.function.definition.rust
+#                                        ^ source.rust meta.function.definition.rust punctuation.brackets.curly.rust
+>            view! { <b>"fancy"</b> }
+#^^^^^^^^^^^^ source.rust
+#            ^^^^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#                ^ source.rust meta.macro.view.rsx entity.name.function.macro.rust
+#                 ^ source.rust meta.macro.view.rsx
+#                  ^ source.rust meta.macro.view.rsx punctuation.section.macro.begin.rsx
+#                   ^ source.rust meta.macro.view.rsx
+#                    ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.begin.rsx
+#                     ^ source.rust meta.macro.view.rsx meta.tag.open.rsx entity.name.tag.rsx
+#                      ^ source.rust meta.macro.view.rsx meta.tag.open.rsx punctuation.definition.tag.end.rsx
+#                       ^ source.rust meta.macro.view.rsx string.quoted.double.rsx punctuation.definition.string.begin.rsx
+#                        ^^^^^ source.rust meta.macro.view.rsx string.quoted.double.rsx
+#                             ^ source.rust meta.macro.view.rsx string.quoted.double.rsx punctuation.definition.string.end.rsx
+#                              ^^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.begin.rsx
+#                                ^ source.rust meta.macro.view.rsx meta.tag.close.rsx entity.name.tag.rsx
+#                                 ^ source.rust meta.macro.view.rsx meta.tag.close.rsx punctuation.definition.tag.end.rsx
+#                                  ^ source.rust meta.macro.view.rsx
+#                                   ^ source.rust meta.macro.view.rsx punctuation.section.macro.end.rsx
+>        }
+#^^^^^^^^ source.rust
+#        ^ source.rust punctuation.brackets.curly.rust
+>    }
+#^^^^ source.rust
+#    ^ source.rust punctuation.brackets.curly.rust
 >}
 #^ source.rust punctuation.brackets.curly.rust
 >

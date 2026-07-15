@@ -110,8 +110,8 @@ const RA_LABEL = "---\n\n**rust-analyzer**";
 
 /**
   * Merge our RSX HTML card above rust-analyzer's (already trimmed) hover, each
-  * under a heading. `base` is null when r-a had no hover (or trimming emptied
-  * it), in which case we show our card alone.
+  * under a heading. `base` is null when rust-analyzer had no hover (or trimming
+  * emptied it), in which case we show our card alone.
   */
 function mergeHover(
     base: vscode.Hover | null,
@@ -269,7 +269,7 @@ export class SemanticTokenFilter implements vscode.Disposable {
                 if (!inRanges(this.regionsFor(document).markup, document.offsetAt(position))) {
                     return res; // outside markup: rust-analyzer's hover, untouched
                 }
-                // In RSX markup. Optionally strip r-a's crate-doc noise, then optionally
+                // In RSX markup. Optionally strip rust-analyzer's crate-doc noise, then optionally
                 // prepend our HTML card so it renders above the tachys card.
                 let base: vscode.Hover | null = res ?? null;
                 if (base && this.hoverTrimEnabled()) base = this.trimmedHover(base);

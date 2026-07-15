@@ -2,3 +2,7 @@
 node_modules/
 dist/
 *.vsix
+
+# rust-analyzer fixture workspace (see test/fixtures/Cargo.toml)
+test/fixtures/target/
+test/fixtures/Cargo.lock

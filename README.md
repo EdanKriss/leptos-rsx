@@ -106,7 +106,7 @@ The same hook also improves **hovers** inside markup. Two things happen:
    and the **MDN Reference** link — and renders it *above* rust-analyzer's card
    in the same hover, each block under a heading with a clear labeled break
    between them. (VS Code offers no way to reorder separate hover cards, so we
-   merge into r-a's rather than stacking a second card.)
+   merge into rust-analyzer's rather than stacking a second card.)
 
 Controlled by `leptosRsxHtml.hovers` (default `all` = tags, attributes, and
 Leptos namespaces; `attributes` skips tags since tachys already documents them;

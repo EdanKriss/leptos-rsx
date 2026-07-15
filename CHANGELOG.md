@@ -40,7 +40,7 @@
 ## 0.1.1
 
 - Coexist with rust-analyzer: one-time prompt in Leptos workspaces to disable
-  Rust semantic highlighting (which paints over RSX colors once r-a loads),
+  Rust semantic highlighting (which paints over RSX colors once rust-analyzer loads),
   plus a toggle command.
 - RSX hovers off by default (`leptosRsxHtml.hovers`) — rust-analyzer stacks
   its own cards inside `view!`; opt into `attributes` or `all` for

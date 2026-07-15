@@ -1,0 +1,16 @@
+# This crate exists only so rust-analyzer loads a real workspace for the fixtures.
+# That makes rust-analyzer resolve `leptos`, expand `view!` and `#[component]`,
+# and emit the "tags-as-functions" semantic tokens the extension's middleware
+# is designed to filter.
+[package]
+name = "leptos-rsx-fixtures"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+leptos = { version = "0.7", features = ["csr"] }
+log = "0.4"

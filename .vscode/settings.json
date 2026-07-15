@@ -1,0 +1,26 @@
+{
+  // Run task/debug shells (used by "Run and Debug" or F5 shortcut) as interactive
+  // login shells so they source ~/.zshrc or ~/.bashrc. Without this, VS Code
+  // spawns a non-interactive login shell that skips those files, so version
+  // managers like nvm never load and `npm run build` fails with "command not found"
+  // (exit 127).
+  "terminal.integrated.automationProfile.osx": {
+    // "path": "/bin/zsh",
+    "path": "${env:SHELL}",
+    "args": ["-l", "-i"]
+  },
+  "terminal.integrated.automationProfile.linux": {
+    // "path": "/bin/bash",
+    "path": "${env:SHELL}",
+    "args": ["-l", "-i"]
+  },
+
+  // This repo is a TypeScript extension, not a Rust project — the only Cargo
+  // manifest is the rust-analyzer fixture crate under test/fixtures/. rust-analyzer
+  // auto-activates here (the repo contains .rs files) and, finding no manifest
+  // at the root, errors with "failed to find any projects".
+  "rust-analyzer.linkedProjects": ["test/fixtures/Cargo.toml"],
+  // Don't run `cargo check` in this window; the fixture crate is exercised in
+  // the F5 Extension Development Host, not here.
+  "rust-analyzer.checkOnSave": false
+}

@@ -5,8 +5,8 @@
       "type": "npm",
       "script": "build",
       "group": "build",
-      "problemMatcher": "$esbuild",
-      "label": "npm: build"
+      "problemMatcher": [],
+      "label": "npm run build"
     }
   ]
 }

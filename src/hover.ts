@@ -65,9 +65,9 @@ export function rsxHoverMarkdown(
 /**
   * Standalone RSX hover, used only as a fallback. When the semantic-token filter
   * is attached to rust-analyzer, the middleware merges the same content into
-  * r-a's own hover (ordered above the tachys card); a second standalone card
-  * would just duplicate it. When the filter can't attach (no r-a), there's no
-  * tachys card to merge into, so we surface the RSX card on its own here.
+  * rust-analyzer's own hover (ordered above the tachys card); a second standalone
+  * card would just duplicate it. When the filter can't attach (no rust-analyzer),
+  * there's no tachys card to merge into, so we surface the RSX card on its own here.
   */
 export class RsxHoverProvider implements vscode.HoverProvider {
     constructor(private readonly filter: { readonly status: string }) {}

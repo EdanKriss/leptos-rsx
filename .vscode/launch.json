@@ -5,12 +5,18 @@
       "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",
+      // Runtime args for the debug window, not the build command
       "args": [
+        // Dir containing package.json, so it can run "main"
         "--extensionDevelopmentPath=${workspaceFolder}",
+        // Workspace dir for the Extension Development Host
+        "${workspaceFolder}/test/fixtures",
+        // File to display
         "${workspaceFolder}/test/fixtures/theme_switch.rs"
       ],
+      // Location of sourcemap files
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "preLaunchTask": "npm: build"
+      "preLaunchTask": "npm run build"
     }
   ]
 }

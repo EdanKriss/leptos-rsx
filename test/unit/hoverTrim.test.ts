@@ -54,7 +54,7 @@ test("mentions of extern crate in prose or code blocks are not cut", () => {
     assert.equal(trimCrateDocSection(nonRustFence), nonRustFence);
 });
 
-test("strips the dangling rule whichever character r-a used", () => {
+test("strips the dangling rule whichever character rust-analyzer used", () => {
     for (const rule of ["---", "___"]) {
         const md = `${DEFINITION}\n\n${rule}\n\n${CRATE_SECTION}`;
         const trimmed = trimCrateDocSection(md);
