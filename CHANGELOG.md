@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.2.6
+
+- **Fixed highlighting staying wrong after the extension re-attaches** (disable →
+  re-enable, or rust-analyzer restarting after an OS sleep). VS Code only asks
+  the server for token *deltas* once it holds a result id, so a filter that
+  attached late never saw a full token set and passed everything through
+  unfiltered until the file was closed and reopened. On such a cache miss the
+  middleware now fetches the full token set from the server itself and filters
+  that. If the fetch fails (server busy/restarting), it falls back to the old
+  pass-through and retries on the next delta.
+- **Faster attach.** Attach attempts now burst (~1s → 15s) after activation,
+  extension changes, and window refocus (the wake-from-sleep signal), instead
+  of only a 30-second poll; the poll remains as a safety net.
+- **Per-document decorations fallback.** In `auto` mode, decorations now cover
+  each document until a *filtered* token set has actually been delivered for it
+  (not just "middleware attached"), so files you view but never edit can't sit
+  in rust-analyzer's unfiltered colors. Decorations are also skipped entirely
+  when Rust semantic highlighting is explicitly disabled — the grammar already
+  shows through there.
+
 ## 0.2.3
 
 - **RSX HTML docs merged into rust-analyzer's hover, on by default.** The MDN/W3C

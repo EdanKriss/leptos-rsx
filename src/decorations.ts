@@ -43,6 +43,7 @@ export class RsxDecorations implements vscode.Disposable {
 
         this.disposables.push(
             filter.onDidChangeStatus(() => this.refreshAll()),
+            filter.onDidChangeEffective(() => this.scheduleRefresh()),
             vscode.window.onDidChangeVisibleTextEditors(() => this.refreshAll()),
             vscode.workspace.onDidChangeTextDocument((e) => {
                 if (e.document.languageId === "rust") this.scheduleRefresh();
@@ -63,18 +64,24 @@ export class RsxDecorations implements vscode.Disposable {
         for (const kind of KINDS) this.types[kind].dispose();
     }
 
-    private active(): boolean {
+    private activeFor(document: vscode.TextDocument): boolean {
         const mode = vscode.workspace
             .getConfiguration("leptosRsxHtml")
             .get<string>("decorationsFallback", "auto");
         if (mode === "off") return false;
         if (mode === "always") return true;
         // auto: only needed when rust-analyzer paints semantic tokens over the
-        // grammar AND the middleware couldn't intercept them.
-        return (
-            this.filter.status !== "attached" &&
-            vscode.extensions.getExtension("rust-lang.rust-analyzer") !== undefined
-        );
+        // grammar AND the middleware hasn't intercepted them for this document
+        // yet — either it isn't attached, or it attached after VS Code already
+        // fetched tokens (extension reload, rust-analyzer restart) and hasn't
+        // delivered a filtered set. Covers files the user views but never
+        // edits, where VS Code won't re-request tokens on its own.
+        if (vscode.extensions.getExtension("rust-lang.rust-analyzer") === undefined) return false;
+        const semantic = vscode.workspace
+            .getConfiguration("editor", { languageId: "rust" })
+            .get<boolean | string>("semanticHighlighting.enabled");
+        if (semantic === false) return false; // no tokens at all: grammar already shows
+        return this.filter.status !== "attached" || !this.filter.isEffective(document);
     }
 
     private scheduleRefresh(): void {
@@ -84,10 +91,9 @@ export class RsxDecorations implements vscode.Disposable {
     }
 
     private refreshAll(): void {
-        const on = this.active();
         for (const editor of vscode.window.visibleTextEditors) {
             if (editor.document.languageId !== "rust") continue;
-            if (on) this.paint(editor);
+            if (this.activeFor(editor.document)) this.paint(editor);
             else this.clear(editor);
         }
     }

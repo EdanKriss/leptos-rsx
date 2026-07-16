@@ -34,6 +34,13 @@ interface RustAnalyzerApiLike {
 
 interface LanguageClientLike {
     clientOptions: { middleware?: MiddlewareLike };
+    /** Raw LSP escape hatch, used to recover full tokens on delta cache misses. */
+    sendRequest?: (
+        method: string,
+        param: unknown,
+        token?: vscode.CancellationToken,
+    ) => Promise<unknown>;
+    code2ProtocolConverter?: { asUri?: (uri: vscode.Uri) => string };
 }
 
 type FullSignature = (
@@ -98,6 +105,12 @@ interface RegionCacheEntry {
 
 const RA_EXTENSION_ID = "rust-lang.rust-analyzer";
 
+// Retry cadence right after an attach trigger (activation, extension change,
+// window focus). rust-analyzer creates its client lazily, so the first tries
+// usually miss; the burst shrinks the unattached window from the steady poll's
+// 30s to about a second.
+const ATTACH_BURST_DELAYS_MS = [1_000, 2_000, 4_000, 8_000, 15_000];
+
 // Labels that head each block of the merged hover. The rust-analyzer label sits
 // in its own hover section, so VS Code brackets it with a rule above *and*
 // below — a far more deliberate break than the single divider array contents
@@ -130,29 +143,41 @@ function mergeHover(
 export class SemanticTokenFilter implements vscode.Disposable {
     private readonly statusEmitter = new vscode.EventEmitter<FilterStatus>();
     readonly onDidChangeStatus = this.statusEmitter.event;
+    private readonly effectiveEmitter = new vscode.EventEmitter<void>();
+    /** Fires when filtering becomes effective (or stops being) for some document. */
+    readonly onDidChangeEffective = this.effectiveEmitter.event;
 
     private _status: FilterStatus = "unavailable";
     private patchedClient: LanguageClientLike | undefined;
+    private readonly wrappedMiddleware = new WeakSet<MiddlewareLike>();
     private readonly regionCache = new Map<string, RegionCacheEntry>();
     /** Last *unfiltered* token data per document, for applying server deltas. */
     private readonly tokenCache = new Map<string, { resultId?: string; data: number[] }>();
     private readonly disposables: vscode.Disposable[] = [];
     private timer: ReturnType<typeof setInterval> | undefined;
+    private burstTimer: ReturnType<typeof setTimeout> | undefined;
 
     constructor() {
         this.disposables.push(
-            vscode.extensions.onDidChange(() => void this.tryAttach()),
+            vscode.extensions.onDidChange(() => this.startAttachBurst()),
+            // After an OS sleep, rust-analyzer may have restarted its client
+            // while timers were suspended; refocusing the window is the
+            // earliest reliable wake signal.
+            vscode.window.onDidChangeWindowState((state) => {
+                if (state.focused) this.startAttachBurst();
+            }),
             vscode.workspace.onDidCloseTextDocument((doc) => {
                 this.regionCache.delete(doc.uri.toString());
                 this.tokenCache.delete(doc.uri.toString());
             }),
         );
         // rust-analyzer constructs (and on restart, re-constructs) its client
-        // lazily; re-check cheaply until attached, and afterwards in case of
-        // restarts. unref() so tests and shutdown aren't held open.
+        // lazily; the burst catches it quickly after a trigger, and the slow
+        // poll is the safety net for client swaps no event announces. unref()
+        // so tests and shutdown aren't held open.
         this.timer = setInterval(() => void this.tryAttach(), 30_000);
         this.timer.unref?.();
-        void this.tryAttach();
+        this.startAttachBurst();
     }
 
     get status(): FilterStatus {
@@ -161,8 +186,29 @@ export class SemanticTokenFilter implements vscode.Disposable {
 
     dispose(): void {
         if (this.timer !== undefined) clearInterval(this.timer);
+        if (this.burstTimer !== undefined) clearTimeout(this.burstTimer);
         for (const d of this.disposables) d.dispose();
         this.statusEmitter.dispose();
+        this.effectiveEmitter.dispose();
+    }
+
+    /** Whether a filtered token set has actually been delivered for this document. */
+    isEffective(document: vscode.TextDocument): boolean {
+        return this.tokenCache.has(document.uri.toString());
+    }
+
+    private startAttachBurst(): void {
+        if (this.burstTimer !== undefined) clearTimeout(this.burstTimer);
+        let attempt = 0;
+        const run = (): void => {
+            this.burstTimer = undefined;
+            void this.tryAttach();
+            const delay = ATTACH_BURST_DELAYS_MS[attempt++];
+            if (delay === undefined) return;
+            this.burstTimer = setTimeout(run, delay);
+            this.burstTimer.unref?.();
+        };
+        run();
     }
 
     private setStatus(status: FilterStatus): void {
@@ -201,7 +247,21 @@ export class SemanticTokenFilter implements vscode.Disposable {
                 return;
             }
             options.middleware ??= {};
-            this.wrap(options.middleware);
+            // A recreated client could reuse its predecessor's options object;
+            // wrapping the same middleware twice would make the cache treat
+            // already-filtered data as the unfiltered base for delta merges.
+            if (!this.wrappedMiddleware.has(options.middleware)) {
+                this.wrap(options.middleware);
+                this.wrappedMiddleware.add(options.middleware);
+            }
+            if (this.patchedClient !== undefined && this.tokenCache.size > 0) {
+                // Client swap: the new server shares no resultIds with the old
+                // one, and any tokens VS Code fetched before this attach went
+                // out unfiltered — drop the cache so documents count as
+                // not-yet-effective until filtered tokens flow again.
+                this.tokenCache.clear();
+                this.effectiveEmitter.fire();
+            }
             this.patchedClient = client;
             this.setStatus("attached");
         } catch {
@@ -218,10 +278,7 @@ export class SemanticTokenFilter implements vscode.Disposable {
         mw.provideDocumentSemanticTokens = async (document, token, next) => {
             const res = prevFull ? await prevFull(document, token, next) : await next(document, token);
             if (!res || !this.applies(document)) return res;
-            this.tokenCache.set(document.uri.toString(), {
-                resultId: res.resultId,
-                data: Array.from(res.data),
-            });
+            this.cacheTokens(document.uri.toString(), res.resultId, Array.from(res.data));
             return this.filtered(document, res.data, res.resultId);
         };
 
@@ -233,22 +290,25 @@ export class SemanticTokenFilter implements vscode.Disposable {
 
             if (!("edits" in res)) {
                 // Server answered the delta request with full tokens.
-                this.tokenCache.set(document.uri.toString(), {
-                    resultId: res.resultId,
-                    data: Array.from(res.data),
-                });
+                this.cacheTokens(document.uri.toString(), res.resultId, Array.from(res.data));
                 return this.filtered(document, res.data, res.resultId);
             }
 
             const key = document.uri.toString();
             const cached = this.tokenCache.get(key);
             if (!cached || cached.resultId !== previousResultId) {
-                // Can't reconstruct full data (shouldn't happen: a full request always
-                // precedes deltas). Pass through; the next full request self-heals.
-                return res;
+                // The base full response predates this middleware (it attached
+                // after an extension reload or rust-analyzer restart, when VS
+                // Code already held a valid resultId — VS Code then keeps
+                // sending deltas indefinitely, so no full request would ever
+                // self-heal this). Fetch the full set from the server directly.
+                const full = await this.requestFullTokens(document, token);
+                if (!full) return res; // pass through; the next delta retries
+                this.cacheTokens(key, full.resultId, full.data);
+                return this.filtered(document, full.data, full.resultId);
             }
             const merged = applySemanticTokenEdits(cached.data, res.edits);
-            this.tokenCache.set(key, { resultId: res.resultId, data: merged });
+            this.cacheTokens(key, res.resultId, merged);
             return this.filtered(document, merged, res.resultId);
         };
 
@@ -331,6 +391,44 @@ export class SemanticTokenFilter implements vscode.Disposable {
 
     private applies(document: vscode.TextDocument): boolean {
         return this.enabled() && document.languageId === "rust";
+    }
+
+    private cacheTokens(key: string, resultId: string | undefined, data: number[]): void {
+        const isNew = !this.tokenCache.has(key);
+        this.tokenCache.set(key, { resultId, data });
+        if (isNew) this.effectiveEmitter.fire();
+    }
+
+    /**
+      * Ask the server for the document's full token set, bypassing VS Code's
+      * delta bookkeeping. Returns null on any failure — client without
+      * sendRequest, server busy/restarting (ContentModified), cancellation —
+      * in which case the caller passes the delta through and retries later.
+      */
+    private async requestFullTokens(
+        document: vscode.TextDocument,
+        token: vscode.CancellationToken,
+    ): Promise<{ resultId?: string; data: number[] } | null> {
+        try {
+            const client = this.patchedClient;
+            if (!client?.sendRequest) return null;
+            const uri =
+                client.code2ProtocolConverter?.asUri?.(document.uri) ?? document.uri.toString();
+            const res = await client.sendRequest(
+                "textDocument/semanticTokens/full",
+                { textDocument: { uri } },
+                token,
+            );
+            if (!res || typeof res !== "object") return null;
+            const { resultId, data } = res as { resultId?: unknown; data?: unknown };
+            if (!Array.isArray(data)) return null;
+            return {
+                resultId: typeof resultId === "string" ? resultId : undefined,
+                data: data as number[],
+            };
+        } catch {
+            return null;
+        }
     }
 
     private filtered(

@@ -2,7 +2,7 @@
   "name": "leptos-rsx-html",
   "displayName": "Leptos RSX (HTML)",
   "description": "HTML syntax highlighting and IntelliSense inside Leptos view! macros.",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "publisher": "EdanKriss",
   "license": "MIT",
   "icon": "assets/icon.png",

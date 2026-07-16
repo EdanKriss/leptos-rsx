@@ -17,6 +17,7 @@ const noopDisposable = () => ({ dispose() {} });
 // Fake rust-analyzer extension whose exported client our middleware patches.
 const fakeRaClient = { clientOptions: {} };
 const fakeRaExtension = { isActive: true, exports: { client: fakeRaClient } };
+const extensionChangeListeners = [];
 const vscodeStub = {
     Position,
     Range,
@@ -34,7 +35,7 @@ const vscodeStub = {
     },
     extensions: {
         getExtension: (id) => (id === "rust-lang.rust-analyzer" ? fakeRaExtension : undefined),
-        onDidChange: noopDisposable,
+        onDidChange: (fn) => { extensionChangeListeners.push(fn); return { dispose() {} }; },
     },
     languages: {
         registerCompletionItemProvider(_sel, provider, ...triggers) {
@@ -53,6 +54,7 @@ const vscodeStub = {
         setStatusBarMessage: noopDisposable,
         createTextEditorDecorationType: noopDisposable,
         onDidChangeVisibleTextEditors: noopDisposable,
+        onDidChangeWindowState: noopDisposable,
         visibleTextEditors: [],
     },
     ConfigurationTarget: { Workspace: 2 },
@@ -284,6 +286,66 @@ const labels = (items) => items.map((i) => i.label);
     const onRust = await mw.provideHover(hd, posOf("mode"), {}, async () => raHover());
     assert.ok(/About Leptos/.test(onRust.contents[0].value),
         "hovers on embedded Rust are untouched (no trim, no merge)");
+
+    // ---- stale-delta recovery (extension re-enable, overnight r-a restart) --
+    // VS Code already held a valid resultId when the middleware attached, so it
+    // only ever sends deltas; the filter must fetch full tokens itself instead
+    // of passing deltas through unfiltered forever.
+    {
+        const d2 = doc(text);
+        let fullFetches = 0;
+        fakeRaClient.sendRequest = async (method, params) => {
+            assert.equal(method, "textDocument/semanticTokens/full");
+            assert.equal(params.textDocument.uri, d2.uri.toString());
+            fullFetches++;
+            return { resultId: "srv-10", data };
+        };
+        const recovered = await mw.provideDocumentSemanticTokensEdits(d2, "pre-attach-id", {},
+            async () => ({ edits: [], resultId: "srv-10" }));
+        assert.equal(fullFetches, 1, "unknown previousResultId triggers a full fetch");
+        assert.deepEqual(decodeChars(Array.from(recovered.data)), expectKept,
+            "recovered full tokens are filtered");
+        assert.equal(recovered.resultId, "srv-10");
+
+        // The cache is primed now: the next delta merges without another fetch.
+        const after = await mw.provideDocumentSemanticTokensEdits(d2, "srv-10", {},
+            async () => ({ edits: [], resultId: "srv-11" }));
+        assert.equal(fullFetches, 1, "no refetch once the cache is primed");
+        assert.deepEqual(decodeChars(Array.from(after.data)), expectKept);
+        delete fakeRaClient.sendRequest;
+    }
+
+    // Recovery failure (server busy/restarting, ContentModified) degrades to
+    // pass-through — worst case stays today's behavior; the next delta retries.
+    {
+        const d3 = doc(text);
+        fakeRaClient.sendRequest = async () => { throw new Error("content modified"); };
+        const res = await mw.provideDocumentSemanticTokensEdits(d3, "unknown", {},
+            async () => ({ edits: [{ start: 0, deleteCount: 0, data: [7] }], resultId: "z" }));
+        assert.ok("edits" in res, "unrecoverable delta passes through untouched");
+        delete fakeRaClient.sendRequest;
+    }
+
+    // ---- rust-analyzer client swap (restart while the window stays open) ----
+    {
+        let fetches = 0;
+        const newClient = {
+            clientOptions: {},
+            sendRequest: async () => { fetches++; return { resultId: "new-1", data }; },
+        };
+        fakeRaExtension.exports = { client: newClient };
+        for (const fn of extensionChangeListeners) fn();
+        await new Promise((r) => setTimeout(r, 20));
+        const mw2 = newClient.clientOptions.middleware;
+        assert.ok(mw2 && typeof mw2.provideDocumentSemanticTokensEdits === "function",
+            "middleware re-attached to the swapped client");
+        // The old server's resultIds were dropped on swap: a delta the old
+        // cache could have merged must now recover via the new client.
+        const res = await mw2.provideDocumentSemanticTokensEdits(d, "2", {},
+            async () => ({ edits: [], resultId: "new-1" }));
+        assert.equal(fetches, 1, "stale cache dropped on client swap → full fetch");
+        assert.deepEqual(decodeChars(Array.from(res.data)), expectKept);
+    }
 
     console.log("smoke: all scenarios pass ✓");
 })().catch((err) => { console.error(err); process.exit(1); });
